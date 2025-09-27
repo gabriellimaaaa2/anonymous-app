@@ -8,7 +8,7 @@
     "dev:frontend": "cd frontend && pnpm run dev",
     "dev:backend": "cd backend && npm run activate-venv && python src/main.py",
     "build": "npm run build:frontend",
-    "build:frontend": "cd frontend && pnpm run build",
+    "build:frontend": "cd frontend && pnpm install && pnpm run build",
     "install:all": "npm run install:frontend && npm run install:backend",
     "install:frontend": "cd frontend && pnpm install",
     "install:backend": "cd backend && npm run create-venv && npm run install-requirements",
