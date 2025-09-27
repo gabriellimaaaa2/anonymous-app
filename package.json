@@ -1,0 +1,51 @@
+{
+  "name": "anonymous-app",
+  "version": "1.0.0",
+  "description": "Aplicação web ANONYMOUS - Q&A anônimo com monetização",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "cd frontend && pnpm run dev",
+    "dev:backend": "cd backend && source venv/bin/activate && python src/main.py",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && pnpm run build",
+    "build:backend": "cd backend && source venv/bin/activate && pip freeze > requirements.txt",
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "install:frontend": "cd frontend && pnpm install",
+    "install:backend": "cd backend && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && pnpm run test",
+    "test:backend": "cd backend && source venv/bin/activate && python -m pytest tests/",
+    "seed": "cd backend && source venv/bin/activate && python scripts/seed.py",
+    "migrate": "cd backend && source venv/bin/activate && python scripts/migrate.py",
+    "start": "npm run build && npm run start:production",
+    "start:production": "concurrently \"npm run serve:frontend\" \"npm run start:backend\"",
+    "serve:frontend": "cd frontend && pnpm run preview",
+    "start:backend": "cd backend && source venv/bin/activate && gunicorn -w 4 -b 0.0.0.0:5000 src.main:app",
+    "zip": "node scripts/create-zip.js",
+    "setup": "npm run install:all && npm run migrate && npm run seed",
+    "clean": "rm -rf frontend/node_modules frontend/dist backend/venv backend/__pycache__ backend/src/__pycache__",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "cd frontend && pnpm run lint",
+    "lint:backend": "cd backend && source venv/bin/activate && flake8 src/ tests/"
+  },
+  "keywords": [
+    "anonymous",
+    "q&a",
+    "pwa",
+    "react",
+    "flask",
+    "supabase",
+    "monetization"
+  ],
+  "author": "Manus AI",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "archiver": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
